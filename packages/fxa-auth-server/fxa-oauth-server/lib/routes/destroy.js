@@ -8,6 +8,7 @@ const AppError = require('../error');
 const db = require('../db');
 const encrypt = require('../encrypt');
 const validators = require('../validators');
+const { getHashedAccessToken } = require('../token');
 
 /*jshint camelcase: false*/
 
@@ -30,7 +31,7 @@ module.exports = {
     if (req.payload.access_token) {
       getToken = 'getAccessToken';
       removeToken = 'removeAccessToken';
-      token = encrypt.hash(req.payload.access_token);
+      token = await getHashedAccessToken(req.payload.access_token);
     } else {
       getToken = 'getRefreshToken';
       removeToken = 'removeRefreshToken';

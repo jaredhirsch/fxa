@@ -6,8 +6,6 @@ const Joi = require('joi');
 
 const logger = require('../logging')('routes.verify');
 const token = require('../token');
-const validators = require('../validators');
-
 const config = require('../config');
 const amplitude = require('../metrics/amplitude')(
   logger,
@@ -17,9 +15,9 @@ const amplitude = require('../metrics/amplitude')(
 module.exports = {
   validate: {
     payload: {
-      token: validators.token.required(),
-      email: Joi.boolean().optional(),
-    },
+      token: Joi.string().required(),//validators.token.required(),
+      email: Joi.boolean().optional()
+    }
   },
   response: {
     schema: {

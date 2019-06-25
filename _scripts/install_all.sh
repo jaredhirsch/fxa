@@ -22,11 +22,11 @@ cd fxa-auth-db-mysql; npm ci; cd ..
 
 # cd fxa-auth-server; npm link ../fxa-auth-db-mysql; cd ..
 
-PATH=$PATH:$HOME/.cargo/bin
-cd fxa-email-service;
-cargo build --bin fxa_email_send;
-../../_scripts/clone-authdb.sh
-cd ..
+# PATH=$PATH:$HOME/.cargo/bin
+# cd fxa-email-service;
+# cargo build --bin fxa_email_send;
+# ../../_scripts/clone-authdb.sh
+# cd ..
 
 cd browserid-verifier; npm ci; cd ..
 

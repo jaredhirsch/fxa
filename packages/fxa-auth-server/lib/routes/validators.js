@@ -91,7 +91,6 @@ module.exports.service = isA
 module.exports.hexString = isA.string().regex(HEX_STRING);
 module.exports.clientId = module.exports.hexString.length(16);
 module.exports.clientSecret = module.exports.hexString;
-module.exports.accessToken = module.exports.hexString.length(64);
 module.exports.refreshToken = module.exports.hexString.length(64);
 module.exports.authorizationCode = module.exports.hexString.length(64);
 // Note that the empty string is a valid scope value (meaning "no permissions").
@@ -122,6 +121,8 @@ module.exports.jwe = isA
   .regex(
     /^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/
   );
+
+module.exports.accessToken = isA.alternatives().try([module.exports.hexString.length(64), module.exports.assertion]);
 
 // Function to validate an email address.
 //

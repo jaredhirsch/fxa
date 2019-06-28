@@ -122,7 +122,9 @@ module.exports.jwe = isA
     /^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/
   );
 
-module.exports.accessToken = isA.alternatives().try([module.exports.hexString.length(64), module.exports.assertion]);
+module.exports.accessToken = isA
+  .alternatives()
+  .try([module.exports.hexString.length(64), module.exports.assertion]);
 
 // Function to validate an email address.
 //

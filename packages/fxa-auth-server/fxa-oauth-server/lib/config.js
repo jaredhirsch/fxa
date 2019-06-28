@@ -179,14 +179,14 @@ const conf = convict({
       doc: 'Whether or not JWT access tokens are enabled',
       format: Boolean,
       default: true,
-      env: 'JWT_ACCESS_TOKENS_ENABLED'
+      env: 'JWT_ACCESS_TOKENS_ENABLED',
     },
     enabledClientIds: {
       doc: 'JWT access tokens are only returned for client_ids in this list',
       format: Array,
       default: [],
-      env: 'JWT_ACCESS_TOKENS_ENABLED_CLIENT_IDS'
-    }
+      env: 'JWT_ACCESS_TOKENS_ENABLED_CLIENT_IDS',
+    },
   },
   localRedirects: {
     doc: 'When true, `localhost` and `127.0.0.1` always are legal redirects.',

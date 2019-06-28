@@ -28,7 +28,9 @@ const ID_TOKEN_KEY = JwTool.JWK.fromObject(config.get('openid.key'), {
   iss: ID_TOKEN_ISSUER,
 });
 const JWT_ACCESS_TOKENS_ENABLED = config.get('jwtAccessTokens.enabled');
-const JWT_ACCESS_TOKENS_CLIENT_IDS = config.get('jwtAccessTokens.enabledClientIds');
+const JWT_ACCESS_TOKENS_CLIENT_IDS = config.get(
+  'jwtAccessTokens.enabledClientIds'
+);
 
 const UNTRUSTED_CLIENT_ALLOWED_SCOPES = ScopeSet.fromArray([
   'openid',
@@ -136,9 +138,11 @@ module.exports.generateTokens = async function generateTokens(grant) {
   const access = await generateAccessToken(db, grant);
 
   const result = {
-    access_token: Buffer.isBuffer(access.token) ? access.token.toString('hex') : access.token,
+    access_token: Buffer.isBuffer(access.token)
+      ? access.token.toString('hex')
+      : access.token,
     token_type: access.type,
-    scope: access.scope.toString()
+    scope: access.scope.toString(),
   };
   result.expires_in =
     grant.ttl || Math.floor((access.expiresAt - Date.now()) / 1000);
@@ -193,7 +197,10 @@ async function generateAccessToken(db, grant) {
   const accessToken = await db.generateAccessToken(grant);
   const clientId = hex(grant.clientId);
 
-  if (! JWT_ACCESS_TOKENS_ENABLED || ! JWT_ACCESS_TOKENS_CLIENT_IDS.includes(clientId)) {
+  if (
+    !JWT_ACCESS_TOKENS_ENABLED ||
+    !JWT_ACCESS_TOKENS_CLIENT_IDS.includes(clientId)
+  ) {
     // return the access token id if JWT access tokens are not globally enabled
     // or if not enabled for this particular client.
     return accessToken;

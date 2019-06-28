@@ -41,7 +41,7 @@ module.exports = {
     let token;
     let tokenType;
     const tokenId = await getHashedAccessToken(req.payload.token);
-    if (tokenTypeHint === 'access_token' || ! tokenTypeHint) {
+    if (tokenTypeHint === 'access_token' || !tokenTypeHint) {
       token = await db.getAccessToken(tokenId);
       if (token) {
         tokenType = 'access_token';

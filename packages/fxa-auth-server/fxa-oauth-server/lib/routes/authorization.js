@@ -104,26 +104,20 @@ module.exports = {
     },
   },
   response: {
-    schema: Joi.object().keys({
-      redirect: Joi.string(),
-      code: Joi.string(),
-      state: Joi.string(),
-      access_token: validators.accessToken,
-      token_type: Joi.string().valid('bearer'),
-      scope: Joi.string().allow(''),
-      auth_at: Joi.number(),
-      expires_in: Joi.number()
-    }).with('access_token', [
-      'token_type',
-      'scope',
-      'auth_at',
-      'expires_in'
-    ]).with('code', [
-      'state',
-      'redirect',
-    ]).without('code', [
-      'access_token'
-    ])
+    schema: Joi.object()
+      .keys({
+        redirect: Joi.string(),
+        code: Joi.string(),
+        state: Joi.string(),
+        access_token: validators.accessToken,
+        token_type: Joi.string().valid('bearer'),
+        scope: Joi.string().allow(''),
+        auth_at: Joi.number(),
+        expires_in: Joi.number(),
+      })
+      .with('access_token', ['token_type', 'scope', 'auth_at', 'expires_in'])
+      .with('code', ['state', 'redirect'])
+      .without('code', ['access_token']),
   },
   handler: async function authorizationEndpoint(req) {
     // Refuse to generate new codes or tokens for disabled clients.

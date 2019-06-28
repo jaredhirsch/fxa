@@ -14,12 +14,15 @@ const { getHashedAccessToken } = require('../token');
 
 module.exports = {
   validate: {
-    payload: Joi.object().keys({
-      client_secret: Joi.string().allow(''),
-      access_token: validators.accessToken,
-      refresh_token: validators.token,
-      refresh_token_id: validators.token,
-    }).rename('token', 'access_token').xor('access_token', 'refresh_token', 'refresh_token_id')
+    payload: Joi.object()
+      .keys({
+        client_secret: Joi.string().allow(''),
+        access_token: validators.accessToken,
+        refresh_token: validators.token,
+        refresh_token_id: validators.token,
+      })
+      .rename('token', 'access_token')
+      .xor('access_token', 'refresh_token', 'refresh_token_id'),
   },
   handler: async function destroyToken(req) {
     var token;

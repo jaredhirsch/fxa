@@ -18,8 +18,8 @@ module.exports = {
   validate: {
     payload: {
       token: validators.accessToken.required(),
-      email: Joi.boolean().optional()
-    }
+      email: Joi.boolean().optional(),
+    },
   },
   response: {
     schema: {

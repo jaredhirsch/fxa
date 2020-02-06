@@ -306,6 +306,13 @@ describe('models/reliers/oauth', () => {
         testInvalidQueryParams('access_type', invalidValues);
       });
 
+      // TODO add more tests
+      describe('id_token_hint', () => {
+        it('throws if id_token_hint token is invalid', () => {
+          testInvalidQueryParams('id_token_hint', [undefined, 'foo@bar.com']);
+        });
+      });
+
       describe('login_hint', () => {
         var validValues = [undefined, 'test@example.com'];
         // login_hint is translated to email if no email is set.

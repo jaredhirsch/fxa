@@ -1644,6 +1644,20 @@ const Account = Backbone.Model.extend(
         )
         .then(this.set.bind(this));
     },
+
+    /**
+     * Verify the OIDC ID Token associated with an account.
+     *
+     * @param {String} idToken - the ID Token
+     * @param {String} clientId - the client ID, used to verify the 'aud' claim
+     * @throws `invalidToken` error if Token is invalid.
+     * @returns {Promise<Object>} resolves with claims in the Token
+     */
+    verifyIdToken(idToken, clientId) {
+      const sessionToken = this.get('sessionToken');
+
+      return this._fxaClient.verifyIdToken(idToken, clientId, sessionToken);
+    },
   },
   {
     ALLOWED_KEYS: ALLOWED_KEYS,

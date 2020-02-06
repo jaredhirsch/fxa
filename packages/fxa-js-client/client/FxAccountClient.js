@@ -2600,6 +2600,33 @@ FxAccountClient.prototype.verifyRecoveryKey = function(
 };
 
 /**
+ * @param {String} idToken, an OIDC ID Token
+ * @param {String} clientId, used to check the 'aud' in the token matches the current client
+ * @param {String} sessionToken
+ */
+FxAccountClient.prototype.verifyIdToken = function(
+  idToken,
+  clientId,
+  sessionToken
+) {
+  var request = this.request;
+  return Promise.resolve()
+    .then(function() {
+      required(idToken, 'idToken');
+      required(clientId, 'clientId');
+      required(sessionToken, 'sessionToken');
+
+      return hawkCredentials(sessionToken, 'sessionToken', HKDF_SIZE);
+    })
+    .then(function(creds) {
+      return request.send('/oauth/id-token-verify', 'POST', creds, {
+        id_token: idToken,
+        client_id: clientId,
+      });
+    });
+};
+
+/**
  * Create an OAuth code using `sessionToken`
  *
  * @param {String} sessionToken

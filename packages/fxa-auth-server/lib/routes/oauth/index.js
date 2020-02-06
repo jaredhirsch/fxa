@@ -27,6 +27,8 @@ const oauthRouteUtils = require('../utils/oauth');
 const { OAUTH_SCOPE_SESSION_TOKEN } = require('../../constants');
 const ScopeSet = require('../../../../fxa-shared').oauth.scopes;
 
+const JWTIdToken = require('../../oauth/jwt_id_token');
+
 module.exports = (log, config, oauthdb, db, mailer, devices) => {
   const OAUTH_DISABLE_NEW_CONNECTIONS_FOR_CLIENTS = new Set(
     config.oauth.disableNewConnectionsForClients || []
@@ -77,6 +79,36 @@ module.exports = (log, config, oauthdb, db, mailer, devices) => {
         checkDisabledClientId(request.payload);
         const sessionToken = request.auth.credentials;
         return oauthdb.getScopedKeyData(sessionToken, request.payload);
+      },
+    },
+    // TODO moving this API directly into auth server here, instead of
+    // bothering with the oauth-server indirection.
+    {
+      method: 'POST',
+      path: '/oauth/id-token-verify',
+      options: {
+        auth: {
+          strategy: 'sessionToken',
+        },
+        validate: {
+          headers: clientAuthValidators.headers,
+          payload: {
+            client_id: clientAuthValidators.clientId,
+            id_token: validators.idToken,
+          },
+        },
+        response: {
+          // TODO: sharpen this
+          schema: Joi.object().unknown(true),
+        },
+      },
+      handler: async function(request) {
+        const claims = await JWTIdToken.verify(
+          request.payload.id_token,
+          request.payload.client_id
+        );
+        // TODO: do we need to separately check that the clientId has 'openid' permissions?
+        return claims;
       },
     },
     {

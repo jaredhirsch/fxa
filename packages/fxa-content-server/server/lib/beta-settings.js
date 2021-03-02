@@ -54,6 +54,10 @@ const settingsConfig = {
 };
 
 // Inject Beta Settings meta content
+// This is needlessly generalized. It's only used to replace __SERVER_CONFIG__
+// with a stringified, sanitized config object in the html page, before returning
+// the page to the client.
+// I don't know why we need to do this like this. TODO.
 function swapBetaMeta(html, metaContent = {}) {
   let result = html;
 
@@ -109,6 +113,7 @@ const useSettingsProxy = createProxyMiddleware({
   onProxyRes: modifyProxyRes,
 });
 
+// Modify the static settings page by replacing __SERVER_CONFIG__ with the config object
 const modifySettingsStatic = function (req, res) {
   return res.send(
     swapBetaMeta(settingsIndexFile, {

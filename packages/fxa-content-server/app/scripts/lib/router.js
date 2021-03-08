@@ -403,16 +403,15 @@ const oldSettingsRoutes = {
 
 // TODO: verify this.config actually includes the 'enableBeta' property
 const Router = Backbone.Router.extend({
-  routes: this.config.get('settings.enableBeta')
-    ? Object.assign({}, baseRoutes, newSettingsRoutes)
-    : Object.assign({}, baseRoutes, oldSettingsRoutes),
-
   initialize(options = {}) {
     this.broker = options.broker;
     this.config = options.config;
     this.metrics = options.metrics;
     this.notifier = options.notifier;
     this.relier = options.relier;
+    this.routes = this.config.get('settings.enableBeta')
+      ? Object.assign({}, baseRoutes, newSettingsRoutes)
+      : Object.assign({}, baseRoutes, oldSettingsRoutes);
     this.user = options.user;
     this.window = options.window || window;
     this._viewModelStack = [];

@@ -409,14 +409,14 @@ const Router = Backbone.Router.extend({
     this.metrics = options.metrics;
     this.notifier = options.notifier;
     this.relier = options.relier;
-    this.routes = this.config.get('settings.enableBeta')
+    this.routes = this.config.enableBeta
       ? Object.assign({}, baseRoutes, newSettingsRoutes)
       : Object.assign({}, baseRoutes, oldSettingsRoutes);
     this.user = options.user;
     this.window = options.window || window;
     this._viewModelStack = [];
 
-    if (this.config.get('settings.enableBeta')) {
+    if (this.config.enableBeta) {
       // TODO: I guess I need to await this, or wrap the rest of initialize in a thenable.
       importOldSettings().then(this.continueInit);
     } else {

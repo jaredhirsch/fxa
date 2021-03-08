@@ -420,15 +420,6 @@ const Router = Backbone.Router.extend({
     this.window = options.window || window;
     this._viewModelStack = [];
 
-    if (this.config.enableBeta) {
-      // TODO: I guess I need to await this, or wrap the rest of initialize in a thenable.
-      importOldSettings().then(this.continueInit);
-    } else {
-      this.continueInit();
-    }
-  },
-
-  continueInit() {
     this.notifier.once(
       'view-shown',
       this._afterFirstViewHasRendered.bind(this)
@@ -444,6 +435,11 @@ const Router = Backbone.Router.extend({
     }
 
     this.storage = Storage.factory('sessionStorage', this.window);
+
+    if (this.config.enableBeta) {
+      // TODO: how can we await this completing? seems brittle.
+      importOldSettings();
+    }
   },
 
   onNavigate(event) {

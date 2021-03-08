@@ -4,21 +4,11 @@
 
 import _ from 'underscore';
 import AccountRecoveryConfirmKey from '../views/account_recovery_confirm_key';
-import AccountRecoveryView from '../views/settings/account_recovery/account_recovery';
-import AccountRecoveryConfirmPasswordView from '../views/settings/account_recovery/confirm_password';
-import AccountRecoveryConfirmRevokeView from '../views/settings/account_recovery/confirm_revoke';
-import AccountRecoveryKeyView from '../views/settings/account_recovery/recovery_key';
-import AvatarCameraView from '../views/settings/avatar_camera';
-import AvatarChangeView from '../views/settings/avatar_change';
-import AvatarCropView from '../views/settings/avatar_crop';
+
 import Backbone from 'backbone';
 import CannotCreateAccountView from '../views/cannot_create_account';
-import ChangePasswordView from '../views/settings/change_password';
 import ChooseWhatToSyncView from '../views/choose_what_to_sync';
 import ClearStorageView from '../views/clear_storage';
-import ClientDisconnectView from '../views/settings/client_disconnect';
-import ClientsView from '../views/settings/clients';
-import CommunicationPreferencesView from '../views/settings/communication_preferences';
 import CompleteResetPasswordView from '../views/complete_reset_password';
 import CompleteSignUpView from '../views/complete_sign_up';
 import ConfirmResetPasswordView from '../views/confirm_reset_password';
@@ -26,9 +16,6 @@ import ConfirmView from '../views/confirm';
 import ConfirmSignupCodeView from '../views/confirm_signup_code';
 import ConnectAnotherDeviceView from '../views/connect_another_device';
 import CookiesDisabledView from '../views/cookies_disabled';
-import DeleteAccountView from '../views/settings/delete_account';
-import DisplayNameView from '../views/settings/display_name';
-import EmailsView from '../views/settings/emails';
 import ForceAuthView from '../views/force_auth';
 import IndexView from '../views/index';
 import InlineTotpSetupView from '../views/inline_totp_setup';
@@ -36,12 +23,10 @@ import InlineRecoverySetupView from '../views/inline_recovery_setup';
 import PermissionsView from '../views/permissions';
 import SupportView from '../views/support';
 import ReadyView from '../views/ready';
-import RecoveryCodesView from '../views/settings/recovery_codes';
 import RedirectAuthView from '../views/authorization';
 import ReportSignInView from '../views/report_sign_in';
 import ResetPasswordView from '../views/reset_password';
 import SecurityEvents from '../views/security_events';
-import SettingsView from '../views/settings';
 import SignInBouncedView from '../views/sign_in_bounced';
 import SignInPasswordView from '../views/sign_in_password';
 import SignInRecoveryCodeView from '../views/sign_in_recovery_code';
@@ -55,11 +40,80 @@ import SmsSentView from '../views/sms_sent';
 import Storage from './storage';
 import SubscriptionsProductRedirectView from '../views/subscriptions_product_redirect';
 import SubscriptionsManagementRedirectView from '../views/subscriptions_management_redirect';
-import TotpSecretView from '../views/settings/totp_secret';
-import TwoStepAuthenticationView from '../views/settings/two_step_authentication';
 import VerificationReasons from './verification-reasons';
 import WouldYouLikeToSync from '../views/would_you_like_to_sync';
 import WhyConnectAnotherDeviceView from '../views/why_connect_another_device';
+
+// declare these conditional imports here, then fill in via importOldSettings if old settings enabled.
+let AccountRecoveryView,
+  AccountRecoveryConfirmPasswordView,
+  AccountRecoveryConfirmRevokeView,
+  AccountRecoveryKeyView,
+  AvatarCameraView,
+  AvatarChangeView,
+  AvatarCropView,
+  ChangePasswordView,
+  ClientDisconnectView,
+  ClientsView,
+  CommunicationPreferencesView,
+  DeleteAccountView,
+  DisplayNameView,
+  EmailsView,
+  RecoveryCodesView,
+  SettingsView,
+  TotpSecretView,
+  TwoStepAuthenticationView;
+
+function importOldSettings() {
+  import('../views/settings/account_recovery/account_recovery').then(
+    (module) => (AccountRecoveryView = module)
+  );
+  import('../views/settings/account_recovery/confirm_password').then(
+    (module) => (AccountRecoveryConfirmPasswordView = module)
+  );
+  import('../views/settings/account_recovery/confirm_revoke').then(
+    (module) => (AccountRecoveryConfirmRevokeView = module)
+  );
+  import('../views/settings/account_recovery/recovery_key').then(
+    (module) => (AccountRecoveryKeyView = module)
+  );
+  import('../views/settings/avatar_camera').then(
+    (module) => (AvatarCameraView = module)
+  );
+  import('../views/settings/avatar_change').then(
+    (module) => (AvatarChangeView = module)
+  );
+  import('../views/settings/avatar_crop').then(
+    (module) => (AvatarCropView = module)
+  );
+  import('../views/settings/change_password').then(
+    (module) => (ChangePasswordView = module)
+  );
+  import('../views/settings/client_disconnect').then(
+    (module) => (ClientDisconnectView = module)
+  );
+  import('../views/settings/clients').then((module) => (ClientsView = module));
+  import('../views/settings/communication_preferences').then(
+    (module) => (CommunicationPreferencesView = module)
+  );
+  import('../views/settings/delete_account').then(
+    (module) => (DeleteAccountView = module)
+  );
+  import('../views/settings/display_name').then(
+    (module) => (DisplayNameView = module)
+  );
+  import('../views/settings/emails').then((module) => (EmailsView = module));
+  import('../views/settings/recovery_codes').then(
+    (module) => (RecoveryCodesView = module)
+  );
+  import('../views/settings').then((module) => (SettingsView = module));
+  import('../views/settings/totp_secret').then(
+    (module) => (TotpSecretView = module)
+  );
+  import('../views/settings/two_step_authentication').then(
+    (module) => (TwoStepAuthenticationView = module)
+  );
+}
 
 function getView(ViewOrPath) {
   if (typeof ViewOrPath === 'string') {
@@ -347,7 +401,7 @@ const oldSettingsRoutes = {
   ),
 };
 
-// TODO: how do we get config in here? require it, I guess?
+// TODO: verify this.config actually includes the 'enableBeta' property
 const Router = Backbone.Router.extend({
   routes: this.config.get('enableBeta')
     ? Object.assign({}, baseRoutes, newSettingsRoutes)
@@ -362,7 +416,17 @@ const Router = Backbone.Router.extend({
     this.user = options.user;
     this.window = options.window || window;
     this._viewModelStack = [];
+    //this.continueInit = continueInit.bind(this);
 
+    if (this.config.get('enableBeta')) {
+      // TODO: I guess I need to await this, or wrap the rest of initialize in a thenable.
+      importOldSettings().then(this.continueInit);
+    } else {
+      this.continueInit();
+    }
+  },
+
+  continueInit() {
     this.notifier.once(
       'view-shown',
       this._afterFirstViewHasRendered.bind(this)

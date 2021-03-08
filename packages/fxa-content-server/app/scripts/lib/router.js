@@ -65,54 +65,58 @@ let AccountRecoveryView,
   TwoStepAuthenticationView;
 
 function importOldSettings() {
-  import('../views/settings/account_recovery/account_recovery').then(
-    (module) => (AccountRecoveryView = module)
-  );
-  import('../views/settings/account_recovery/confirm_password').then(
-    (module) => (AccountRecoveryConfirmPasswordView = module)
-  );
-  import('../views/settings/account_recovery/confirm_revoke').then(
-    (module) => (AccountRecoveryConfirmRevokeView = module)
-  );
-  import('../views/settings/account_recovery/recovery_key').then(
-    (module) => (AccountRecoveryKeyView = module)
-  );
-  import('../views/settings/avatar_camera').then(
-    (module) => (AvatarCameraView = module)
-  );
-  import('../views/settings/avatar_change').then(
-    (module) => (AvatarChangeView = module)
-  );
-  import('../views/settings/avatar_crop').then(
-    (module) => (AvatarCropView = module)
-  );
-  import('../views/settings/change_password').then(
-    (module) => (ChangePasswordView = module)
-  );
-  import('../views/settings/client_disconnect').then(
-    (module) => (ClientDisconnectView = module)
-  );
-  import('../views/settings/clients').then((module) => (ClientsView = module));
-  import('../views/settings/communication_preferences').then(
-    (module) => (CommunicationPreferencesView = module)
-  );
-  import('../views/settings/delete_account').then(
-    (module) => (DeleteAccountView = module)
-  );
-  import('../views/settings/display_name').then(
-    (module) => (DisplayNameView = module)
-  );
-  import('../views/settings/emails').then((module) => (EmailsView = module));
-  import('../views/settings/recovery_codes').then(
-    (module) => (RecoveryCodesView = module)
-  );
-  import('../views/settings').then((module) => (SettingsView = module));
-  import('../views/settings/totp_secret').then(
-    (module) => (TotpSecretView = module)
-  );
-  import('../views/settings/two_step_authentication').then(
-    (module) => (TwoStepAuthenticationView = module)
-  );
+  return Promise.all([
+    import('../views/settings/account_recovery/account_recovery').then(
+      (module) => (AccountRecoveryView = module)
+    ),
+    import('../views/settings/account_recovery/confirm_password').then(
+      (module) => (AccountRecoveryConfirmPasswordView = module)
+    ),
+    import('../views/settings/account_recovery/confirm_revoke').then(
+      (module) => (AccountRecoveryConfirmRevokeView = module)
+    ),
+    import('../views/settings/account_recovery/recovery_key').then(
+      (module) => (AccountRecoveryKeyView = module)
+    ),
+    import('../views/settings/avatar_camera').then(
+      (module) => (AvatarCameraView = module)
+    ),
+    import('../views/settings/avatar_change').then(
+      (module) => (AvatarChangeView = module)
+    ),
+    import('../views/settings/avatar_crop').then(
+      (module) => (AvatarCropView = module)
+    ),
+    import('../views/settings/change_password').then(
+      (module) => (ChangePasswordView = module)
+    ),
+    import('../views/settings/client_disconnect').then(
+      (module) => (ClientDisconnectView = module)
+    ),
+    import('../views/settings/clients').then(
+      (module) => (ClientsView = module)
+    ),
+    import('../views/settings/communication_preferences').then(
+      (module) => (CommunicationPreferencesView = module)
+    ),
+    import('../views/settings/delete_account').then(
+      (module) => (DeleteAccountView = module)
+    ),
+    import('../views/settings/display_name').then(
+      (module) => (DisplayNameView = module)
+    ),
+    import('../views/settings/emails').then((module) => (EmailsView = module)),
+    import('../views/settings/recovery_codes').then(
+      (module) => (RecoveryCodesView = module)
+    ),
+    import('../views/settings').then((module) => (SettingsView = module)),
+    import('../views/settings/totp_secret').then(
+      (module) => (TotpSecretView = module)
+    ),
+    import('../views/settings/two_step_authentication').then(
+      (module) => (TwoStepAuthenticationView = module)
+    ),
+  ]);
 }
 
 function getView(ViewOrPath) {

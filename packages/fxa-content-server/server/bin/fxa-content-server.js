@@ -81,7 +81,7 @@ logger.info('page_template_directory: %s', PAGE_TEMPLATE_DIRECTORY);
 
 function makeApp() {
   const app = express();
-  const betaSettingsPath = '/beta/settings';
+  const newSettingsPath = '/settings';
 
   if (config.get('env') === 'development') {
     const webpack = require('webpack');
@@ -180,7 +180,7 @@ function makeApp() {
   routes.forEach(routeHelpers.addRoute);
 
   if (config.get('env') === 'production') {
-    app.get(betaSettingsPath, modifySettingsStatic);
+    app.get(newSettingsPath, modifySettingsStatic);
   }
   app.use(
     serveStatic(STATIC_DIRECTORY, {
@@ -194,9 +194,9 @@ function makeApp() {
       res.send('<h1>403 Forbidden</h1>');
     });
   } else if (config.get('env') === 'development') {
-    app.use(betaSettingsPath, useSettingsProxy);
+    app.use(newSettingsPath, useSettingsProxy);
   } else {
-    app.get(betaSettingsPath + '/*', modifySettingsStatic);
+    app.get(newSettingsPath + '/*', modifySettingsStatic);
   }
 
   // it's a four-oh-four not found.

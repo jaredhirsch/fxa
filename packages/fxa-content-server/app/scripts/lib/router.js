@@ -210,10 +210,9 @@ const baseRoutes = {
   'reset_password_verified(/)': createViewHandler(ReadyView, {
     type: VerificationReasons.PASSWORD_RESET,
   }),
-  'reset_password_with_recovery_key_verified(/)': createViewHandler(
-    ReadyView,
-    { type: VerificationReasons.PASSWORD_RESET_WITH_RECOVERY_KEY }
-  ),
+  'reset_password_with_recovery_key_verified(/)': createViewHandler(ReadyView, {
+    type: VerificationReasons.PASSWORD_RESET_WITH_RECOVERY_KEY,
+  }),
   'secondary_email_verified(/)': createViewHandler(ReadyView, {
     type: VerificationReasons.SECONDARY_EMAIL_VERIFIED,
   }),
@@ -350,7 +349,9 @@ const oldSettingsRoutes = {
 
 // TODO: how do we get config in here? require it, I guess?
 const Router = Backbone.Router.extend({
-  routes: config.enableBeta ? Object.assign({}, baseRoutes, newSettingsRoutes) : Object.assign({}, baseRoutes, oldSettingsRoutes),
+  routes: this.config.get('enableBeta')
+    ? Object.assign({}, baseRoutes, newSettingsRoutes)
+    : Object.assign({}, baseRoutes, oldSettingsRoutes),
 
   initialize(options = {}) {
     this.broker = options.broker;

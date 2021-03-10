@@ -42,7 +42,7 @@
 
 ## Development
 
-Note that the fxa-settings code is served by the fxa-content-server. To preview the code locally, visit `http://localhost:3030/beta/settings`, not `http://localhost:3000`.
+Note that the fxa-settings code is served by the fxa-content-server. To preview the code locally, visit `http://localhost:3030/settings`, not `http://localhost:3000`.
 
 - `yarn start|stop|restart` to start, stop, and restart the server as a PM2 process
 - `yarn build` to create a production build

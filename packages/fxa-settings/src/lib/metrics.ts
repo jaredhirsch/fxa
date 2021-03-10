@@ -187,7 +187,7 @@ export async function init(flowQueryParams: FlowQueryParams) {
           );
         } catch (e) {}
       }
-      // arriving directly to /beta/settings means all the following are fixed
+      // arriving directly to /settings means all the following are fixed
       flowEventData.broker = 'web';
       flowEventData.context = 'web';
       flowEventData.service = 'none';

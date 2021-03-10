@@ -60,7 +60,7 @@ registerSuite('routes/navigation-timing', {
           initiatorType: 'navigation',
           loadEventEnd: 1531,
           loadEventStart: 1530,
-          name: 'http://localhost:3030/beta/settings?a=b#c',
+          name: 'http://localhost:3030/settings?a=b#c',
           nextHopProtocol: 'h2',
           redirectCount: 0,
           redirectEnd: 0,

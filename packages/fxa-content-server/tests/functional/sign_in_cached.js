@@ -58,14 +58,14 @@ registerSuite('cached signin', {
           .then(openPage(ENTER_EMAIL_URL, selectors.ENTER_EMAIL.HEADER))
           .then(fillOutEmailFirstSignIn(email, PASSWORD))
 
-          .then(testElementExists(selectors.SETTINGS.HEADER))
+          .then(testElementExists(selectors.SETTINGS_V2.HEADER))
           // reset prefill and context
           .then(clearSessionStorage())
 
           .then(openPage(ENTER_EMAIL_URL, selectors.SIGNIN_PASSWORD.HEADER))
           .then(click(selectors.SIGNIN_PASSWORD.SUBMIT_USE_SIGNED_IN))
 
-          .then(testElementExists(selectors.SETTINGS.HEADER))
+          .then(testElementExists(selectors.SETTINGS_V2.HEADER))
       );
     },
 

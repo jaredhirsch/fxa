@@ -167,6 +167,7 @@ export const PageDeleteAccount = (_: RouteComponentProps) => {
                     <Localized id={label} attrs={{ label: true }}>
                       <Checkbox
                         data-testid="required-confirm"
+                        //prefixDataTestId={label}
                         label={label}
                         onChange={handleConfirmChange(label)}
                       />

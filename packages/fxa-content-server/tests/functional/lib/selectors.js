@@ -747,6 +747,24 @@ module.exports = {
       PRIVACY_LINK: '[data-testid=link-privacy]',
       TERMS_LINK: '[data-testid=link-terms]',
     },
+    DELETE_ACCOUNT: {
+      DELETE_ACCOUNT_BUTTON: '[data-testid=settings-delete-account]',
+      DELETE_ACCOUNT_MODAL: '[data-testid=flow-container]',
+      CHECKBOXES: '[data-testid=delete-account-confirm] [data-testid=checkbox-container]',
+      /*CHECKBOX_1:'[data-testid=delete-account-chk-box-1-checkbox-label]',
+      CHECKBOX_2:'[data-testid=delete-account-chk-box-2-checkbox-label]',
+      CHECKBOX_3:'[data-testid=delete-account-chk-box-3-checkbox-label]',
+      CHECKBOX_4:'[data-testid=delete-account-chk-box-4-checkbox-label]',*/
+      CONTINUE_BUTTON: '[data-testid=continue-button]',
+      CONFIRMATION_STEP: '[data-testid=delete-account-confirm-input-container]',
+      PASSWORD_LABEL: '[data-testid=delete-account-confirm-input-label]',
+      PASSWORD_INPUT: '[data-testid=delete-account-confirm-input-field]',
+      TOOLTIP_INCORRECT_PASSWORD: '[data-testid=tooltip]',
+      DELETE_CONFIRM_BUTTON: '[data-testid=delete-account-button]',
+
+
+
+    },
   },
 };
 /*eslint-enable max-len*/
